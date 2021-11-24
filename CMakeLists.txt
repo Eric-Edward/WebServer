@@ -3,7 +3,7 @@ project(WebServer)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(WebServer main.cpp inc/dealRequestPath.h src/dealRequestPath.cpp)
+add_executable(WebServer main.cpp inc/handleRequestPath.h src/handleRequestPath.cpp)
 
 
 link_directories(D:\\homework\\electroniccommerce\\WebServer\\WS2_32.LIB)
