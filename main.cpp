@@ -1,6 +1,8 @@
+#include <iostream>
 #include <cstdio>
 #include <winsock2.h>
 
+#include "./inc/dealRequestPath.h"
 
 int merror(unsigned long long redata, long long error, char *showinfo) {
     if (redata == error) {
@@ -11,7 +13,7 @@ int merror(unsigned long long redata, long long error, char *showinfo) {
     return 0;
 }
 
-void sendWebHtml(SOCKET s, char *file) {
+void sendWebHtml(SOCKET s, const char *file) {
     FILE *pf = fopen(file, "r");
 
     if (pf == NULL) {
@@ -19,10 +21,10 @@ void sendWebHtml(SOCKET s, char *file) {
         return;
     }
 
-    char buf[1024]="";
+    char buf[1024] = "";
     do {
         fgets(buf, 1024, pf);
-        send(s, buf, (int)strlen(buf), 0);
+        send(s, buf, (int) strlen(buf), 0);
     } while (!feof(pf));
 }
 
@@ -61,7 +63,8 @@ int main() {
         recv(client, recData, 1024, 0);
         printf("%s\n共接收到%d个字节的数据！", recData, strlen(recData));
 
-        char *file = "D:\\homework\\electroniccommerce\\WebServer\\hh.html";
+        std::string url = serviceOfConvert(recData);
+        const char *file = url.c_str();
         sendWebHtml(client, file);
         closesocket(client);
     }
